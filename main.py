@@ -9,6 +9,26 @@ trained_face_data = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 #To capture from video from webcam
 webcam = cv2.VideoCapture(0)
 
+#Iterate forever over webcam frames
+while True:
+    #Read current frame
+    successful_frame_read, frame = webcam.read()
+
+    #Must convert to grayscale
+    grayscaled_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+    #Show frame
+    cv2.imshow('Clever Programmer Face Detector', grayscaled_frame)
+
+    cv2.waitKey(1)
+
+#To stop the execution
+key = cv2.waitKey(1)
+
+
+
+"""
+
 #Must convert to grayscale
 grayscaled_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
@@ -27,3 +47,4 @@ cv2.imshow('Clever Programmer Face Detector', img)
 cv2.waitKey()
 
 print("Code Completed")
+"""
