@@ -17,15 +17,23 @@ while True:
     #Must convert to grayscale
     grayscaled_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
+    #To detect faces
+    face_coordinates = trained_face_data.detectMultiScale(grayscaled_frame)
+
+    #Draw rectangles around the faces
+    for (x, y, w, h) in face_coordinates:
+        cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
+
     #Show frame
-    cv2.imshow('Clever Programmer Face Detector', grayscaled_frame)
+    cv2.imshow('Clever Programmer Face Detector', frame)
 
-    cv2.waitKey(1)
+    key = cv2.waitKey(1)
 
-#To stop the execution
-key = cv2.waitKey(1)
+    #Stop if Q key is pressed
+    if key == 81 or key == 113:
+        break
 
-
+print("Code Completed")
 
 """
 
