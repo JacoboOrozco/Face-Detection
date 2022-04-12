@@ -1,26 +1,26 @@
+from tkinter import *
+import tkinter
+from tkinter import filedialog 
+from PIL import Image, ImageTk
 import cv2
+import imutils
+ 
+def labelsLayout(root):
+    lbl_info_video = Label(root, text = "Video de entrada: ")
+    lbl_info_video.grid(column=0, row=1)
 
-#Load opencv pre-trained data on face frontals (haar cascade algorithm)
-trained_face_data = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+def buttonLayout(root):
+    btn_visualizar_video = Button(root, text="Elegir y visualizar video")
+    btn_visualizar_video.grid(column=0, row=0, padx=5, pady=5)
+    labelsLayout(root)
 
-#Choose an image to detect faces in
-img = cv2.imread('RDJ.png')
+def main():
+    root = Tk()
+    buttonLayout(root)
+    root.mainloop()
 
-#Must convert to grayscale
-grayscaled_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-#To detect faces
-face_coordinates = trained_face_data.detectMultiScale(grayscaled_img)
-
-#Draw rectangles around the faces
-cv2.rectangle(img, (220, 143), (220+219, 143+219), (0, 255, 0), 2)
-
-print(face_coordinates)
-
-#To show img
-cv2.imshow('Clever Programmer Face Detector', img)
-
-#In order to pause the execution of the code to be able to se img
-cv2.waitKey()
+if __name__ == "__main__":
+    main()
 
 print("Code Completed")
