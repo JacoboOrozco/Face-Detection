@@ -22,7 +22,7 @@ def visualizarJugadores():
 
             for (x, y, w, h) in face_coordinates:
                 cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
-            frame = imutils.resize(frame, width=640)
+            frame = imutils.resize(frame, width=640, height= 480)
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
             im = Image.fromarray(frame)
@@ -49,7 +49,7 @@ def visualizar():
     if cap is not None:
         ret, frame = cap.read() 
         if ret == True:
-            frame = imutils.resize(frame, width=640)
+            frame = imutils.resize(frame, width=640, height= 480)
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
             im = Image.fromarray(frame)
@@ -88,7 +88,7 @@ trained_face_data = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 root = Tk()
 
 btn_visualizar_video = Button(root, text="Elegir y visualizar video", command=elegirVideo)
-btn_visualizar_video.grid(column=0, row=0, padx=5, pady=5, columnspan= 3)
+btn_visualizar_video.grid(column=0, row=0, padx=5, pady=5, columnspan= 2)
 
 lbl_info_video = Label(root, text = "Video de entrada: ")
 lbl_info_video.grid(column=0, row=1)
@@ -99,20 +99,20 @@ lbl_info_video_path.grid(column=1, row=1)
 
 
 lbl_video = Label(root)
-lbl_video.grid(column=0, row=2, columnspan=3)
+lbl_video.grid(column=0, row=4, columnspan=2)
 
 
-btn_iniciar_jugadores = Button(root, text = "Iniciar", width=45, command=iniciarJugadores)
-btn_iniciar_jugadores.grid(column=0, row=3, padx=5, pady=5)
+btn_iniciar_jugadores = Button(root, text = "Iniciar", command=iniciarJugadores)
+btn_iniciar_jugadores.grid(column=20, row=0, padx=2, pady=2)
 
-btn_finalizar_jugadores = Button(root, text = "Finalizar", width=45, command=finalizarJugadores)
-btn_finalizar_jugadores.grid(column=1, row=3, padx=5, pady=5)
+btn_finalizar_jugadores = Button(root, text = "Finalizar", command=finalizarJugadores)
+btn_finalizar_jugadores.grid(column=21, row=0, padx=2, pady=2)
 
 lbl_info_jugadores = Label(root, text = "A continuacion se muestran los jugadores")
-lbl_info_jugadores.grid(column=0, row=4)
+lbl_info_jugadores.grid(column=20, row=1)
 
 lbl_jugadores = Label(root)
-lbl_jugadores.grid(column=0, row=5, columnspan=3)
+lbl_jugadores.grid(column=20, row=4, columnspan=2)
 
 
 root.mainloop()
