@@ -5,7 +5,6 @@ import cv2
 import imutils
  
 
-
 def finalizarJugadores():
     global cap_jugadores
     cap_jugadores.release()
@@ -17,11 +16,14 @@ def visualizarJugadores():
     if cap_jugadores is not None:
         ret, frame = cap_jugadores.read() 
         if ret == True:
-            frame = imutils.resize(frame, width=640)
             grayscaled_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+            face_coordinates = trained_face_data.detectMultiScale(grayscaled_frame)
+
+            for (x, y, w, h) in face_coordinates:
+                cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
+            frame = imutils.resize(frame, width=640)
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-
-
 
             im = Image.fromarray(frame)
             img = ImageTk.PhotoImage(image=im)
@@ -30,10 +32,7 @@ def visualizarJugadores():
             lbl_jugadores.image = img
 
             
-            face_coordinates = trained_face_data.detectMultiScale(grayscaled_frame)
 
-            for (x, y, w, h) in face_coordinates:
-                cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
             lbl_jugadores.after(10, visualizarJugadores)
         else: 
