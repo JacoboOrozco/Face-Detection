@@ -4,19 +4,37 @@ from PIL import Image, ImageTk
 import cv2
 import imutils
  
+
+
+def finalizarJugadores():
+    global cap_jugadores
+    cap_jugadores.release()
+
+
 def visualizarJugadores():
     global cap_jugadores
+    global trained_face_data
     if cap_jugadores is not None:
         ret, frame = cap_jugadores.read() 
         if ret == True:
             frame = imutils.resize(frame, width=640)
+            grayscaled_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+
 
             im = Image.fromarray(frame)
             img = ImageTk.PhotoImage(image=im)
 
             lbl_jugadores.configure(image=img)
             lbl_jugadores.image = img
+
+            
+            face_coordinates = trained_face_data.detectMultiScale(grayscaled_frame)
+
+            for (x, y, w, h) in face_coordinates:
+                cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
+
             lbl_jugadores.after(10, visualizarJugadores)
         else: 
             lbl_jugadores.image = ""
@@ -66,6 +84,7 @@ def elegirVideo():
 
 cap = None
 cap_jugadores = None
+trained_face_data = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 
 root = Tk()
 
@@ -87,7 +106,7 @@ lbl_video.grid(column=0, row=2, columnspan=3)
 btn_iniciar_jugadores = Button(root, text = "Iniciar", width=45, command=iniciarJugadores)
 btn_iniciar_jugadores.grid(column=0, row=3, padx=5, pady=5)
 
-btn_finalizar_jugadores = Button(root, text = "Finalizar", width=45)
+btn_finalizar_jugadores = Button(root, text = "Finalizar", width=45, command=finalizarJugadores)
 btn_finalizar_jugadores.grid(column=1, row=3, padx=5, pady=5)
 
 lbl_info_jugadores = Label(root, text = "A continuacion se muestran los jugadores")
